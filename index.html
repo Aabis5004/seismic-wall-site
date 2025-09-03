@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SeismicSys - Why Institutions Need Encrypted Blockchain</title>
+    <title>SeismicSys - Encrypted Blockchain Infrastructure</title>
     <style>
         * {
             margin: 0;
@@ -15,209 +15,319 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.7;
             color: #2d3748;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: #0f0f23;
             min-height: 100vh;
             overflow-x: hidden;
+            cursor: none;
         }
 
-        /* Loading Animation */
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            animation: cursorPulse 2s infinite;
+        }
+
+        @keyframes cursorPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Advanced Loading Animation */
         .loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(45deg, #0f0f23, #1a1a3a, #2d2d5f);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            animation: fadeOut 3s ease forwards;
+            animation: loaderFadeOut 4s ease forwards;
         }
 
-        .loader-logo {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
-            animation: bounce 1.5s infinite;
+        .loader-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .loader-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top: 4px solid #667eea;
+            border-right: 4px solid #764ba2;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        .loader-ring:nth-child(2) {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-top: 4px solid #f093fb;
+            border-right: 4px solid #f5576c;
+            animation: spin 1.5s linear infinite reverse;
+        }
+
+        .loader-ring:nth-child(3) {
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            border-top: 4px solid #4facfe;
+            border-right: 4px solid #00f2fe;
+            animation: spin 1s linear infinite;
         }
 
         .loader-text {
             color: white;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-top: 3rem;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite, textGlow 2s ease infinite;
         }
 
-        .loader-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
+        .loader-progress {
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
         }
 
-        @keyframes fadeOut {
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+            animation: loadingProgress 4s ease forwards;
+            width: 0%;
+        }
+
+        @keyframes loaderFadeOut {
             0% { opacity: 1; }
-            70% { opacity: 1; }
+            75% { opacity: 1; }
             100% { opacity: 0; visibility: hidden; }
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* Animated Background */
-        .bg-animation {
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(102, 126, 234, 0.8), 0 0 60px rgba(118, 75, 162, 0.6); }
+        }
+
+        /* Dynamic Background */
+        .background-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.1;
+            background: radial-gradient(circle at 20% 50%, #667eea15 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, #764ba215 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, #f093fb15 0%, transparent 50%),
+                        linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d2d5f 100%);
+            animation: backgroundShift 20s ease infinite;
         }
 
-        .floating-shapes {
+        @keyframes backgroundShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(30deg); }
+        }
+
+        .floating-particles {
             position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(102, 126, 234, 0.1);
             border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
+            animation: particleFloat 15s linear infinite;
         }
 
-        .floating-shapes:nth-child(1) { 
-            top: 20%; left: 20%; 
-            width: 120px; height: 120px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            animation-delay: 0s; 
-        }
-        .floating-shapes:nth-child(2) { 
-            top: 60%; left: 80%; 
-            width: 80px; height: 80px;
-            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
-            animation-delay: 2s; 
-        }
-        .floating-shapes:nth-child(3) { 
-            top: 80%; left: 40%; 
-            width: 100px; height: 100px;
-            background: linear-gradient(45deg, #96ceb4, #feca57);
-            animation-delay: 4s; 
-        }
-        .floating-shapes:nth-child(4) { 
-            top: 30%; left: 70%; 
-            width: 60px; height: 60px;
-            background: linear-gradient(45deg, #ff9ff3, #f368e0);
-            animation-delay: 1s; 
-        }
-        .floating-shapes:nth-child(5) { 
-            top: 50%; left: 10%; 
-            width: 140px; height: 140px;
-            background: linear-gradient(45deg, #54a0ff, #2e86de);
-            animation-delay: 3s; 
+        .particle:nth-child(odd) {
+            background: rgba(118, 75, 162, 0.1);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-            33% { transform: translateY(-30px) rotate(120deg) scale(1.1); }
-            66% { transform: translateY(15px) rotate(240deg) scale(0.9); }
+        .particle:nth-child(3n) {
+            background: rgba(240, 147, 251, 0.1);
         }
 
-        /* Header */
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Advanced Header */
         header {
             position: relative;
-            padding: 2rem 0;
+            padding: 3rem 0;
             text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            animation: slideDown 1.5s ease-out;
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            animation: headerSlide 2s ease-out;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes slideDown {
-            from { transform: translateY(-100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes headerSlide {
+            0% { transform: translateY(-100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
         .logo-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .logo-glow {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: logoGlowPulse 3s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes logoGlowPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.3); opacity: 0.8; }
         }
 
         .seismic-logo-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 15px;
-            animation: logoSpin 4s linear infinite;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            animation: logoRotate 8s linear infinite, logoFloat 4s ease-in-out infinite;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4),
+                        0 0 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 2;
         }
 
         .seismic-logo-img:hover {
-            transform: scale(1.1);
+            transform: scale(1.2) rotate(15deg);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
+                        0 0 50px rgba(102, 126, 234, 0.6);
             animation-play-state: paused;
         }
 
-        @keyframes logoSpin {
+        @keyframes logoRotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        .logo {
-            font-size: 3.5rem;
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-text {
+            font-size: 4rem;
             font-weight: 900;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe);
             background-size: 400% 400%;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradientShift 4s ease infinite;
+            animation: gradientShift 4s ease infinite, textPulse 2s ease infinite;
             cursor: pointer;
             transition: transform 0.3s ease;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
         }
 
-        .logo:hover {
-            transform: scale(1.05) rotate(2deg);
+        .logo-text::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .logo-text:hover::after {
+            transform: translateX(100%);
+        }
+
+        .logo-text:hover {
+            transform: scale(1.05) rotate(-1deg);
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
+            0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes textPulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
+            50% { text-shadow: 0 0 40px rgba(102, 126, 234, 0.6), 0 0 60px rgba(118, 75, 162, 0.4); }
         }
 
         .tagline {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.4rem;
             font-weight: 300;
             margin-bottom: 2rem;
-            animation: fadeInUp 2s ease forwards;
+            animation: fadeInUp 3s ease forwards;
             opacity: 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Navigation */
+        /* Advanced Navigation */
         nav {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1rem;
             margin-top: 2rem;
             flex-wrap: wrap;
         }
@@ -225,21 +335,16 @@
         .nav-link {
             color: white;
             text-decoration: none;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem 2.5rem;
+            background: rgba(102, 126, 234, 0.1);
             border-radius: 50px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(102, 126, 234, 0.2);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
             font-weight: 600;
-        }
-
-        .nav-link:hover {
-            transform: translateY(-5px) scale(1.05);
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
         }
 
         .nav-link::before {
@@ -249,67 +354,125 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.7s;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: all 0.4s ease;
         }
 
         .nav-link:hover::before {
             left: 100%;
         }
 
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: rgba(102, 126, 234, 0.2);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
         /* Main Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
+            position: relative;
         }
 
         /* Hero Section */
         .hero-section {
             text-align: center;
-            padding: 4rem 0;
+            padding: 6rem 0;
             margin-bottom: 4rem;
-            animation: heroEntrance 2s ease forwards;
+            position: relative;
+            animation: heroEntrance 3s ease forwards;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: heroGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes heroGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         .hero-title {
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: 900;
             margin-bottom: 2rem;
-            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
-            background-size: 200% 200%;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 500% 500%;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradientShift 3s ease infinite;
+            animation: gradientShift 5s ease infinite, titleFloat 6s ease-in-out infinite;
             line-height: 1.2;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
         }
 
         .hero-subtitle {
-            font-size: 1.4rem;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 3rem;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            animation: subtitleSlide 4s ease forwards;
+            opacity: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes subtitleSlide {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
         }
 
         @keyframes heroEntrance {
-            0% { opacity: 0; transform: translateY(50px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
-        /* Main Article */
+        /* Main Article with Advanced Animations */
         .main-article {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(15, 15, 35, 0.8);
             border-radius: 30px;
             padding: 4rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            margin-bottom: 4rem;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.5),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
-            animation: articleSlideIn 1.5s ease forwards;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: articleSlideIn 2s ease forwards;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            backdrop-filter: blur(30px);
         }
 
         .main-article::before {
@@ -319,52 +482,70 @@
             left: 0;
             right: 0;
             height: 6px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
             background-size: 300% 300%;
             animation: gradientSlide 3s ease infinite;
         }
 
+        .main-article::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            animation: articleGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes articleGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
         @keyframes gradientSlide {
-            0% { background-position: 0% 50%; }
+            0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         @keyframes articleSlideIn {
-            0% { opacity: 0; transform: translateX(-50px); }
-            100% { opacity: 1; transform: translateX(0); }
+            0% { opacity: 0; transform: translateY(100px) rotateX(10deg); }
+            100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
         }
 
         .article-header {
             text-align: center;
             margin-bottom: 4rem;
             padding-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            position: relative;
         }
 
         .article-title {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             font-weight: 900;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite, titleGlow 3s ease-in-out infinite;
             line-height: 1.2;
-            animation: titleGlow 3s ease-in-out infinite;
         }
 
         @keyframes titleGlow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.2); }
+            0%, 100% { filter: brightness(1) drop-shadow(0 0 10px rgba(102, 126, 234, 0.3)); }
+            50% { filter: brightness(1.2) drop-shadow(0 0 20px rgba(102, 126, 234, 0.6)); }
         }
 
         .article-meta {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 1.5rem;
-            color: #718096;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 1rem;
             flex-wrap: wrap;
         }
@@ -372,54 +553,102 @@
         .article-category {
             background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 25px;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
             font-weight: 700;
-            animation: categoryPulse 2s ease infinite;
+            animation: categoryPulse 3s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: categoryShine 2s ease infinite;
+        }
+
+        @keyframes categoryShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         @keyframes categoryPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5); }
         }
 
-        /* Image Container */
+        /* Enhanced Image Container */
         .image-container {
             text-align: center;
             margin: 4rem 0;
             position: relative;
         }
 
+        .image-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(ellipse, rgba(102, 126, 234, 0.2) 0%, transparent 70%);
+            animation: imageGlowPulse 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes imageGlowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
         .diagram-image {
             width: 100%;
             max-width: 900px;
             height: auto;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 25px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4),
+                        0 0 50px rgba(102, 126, 234, 0.2);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            position: relative;
+            z-index: 2;
         }
 
         .diagram-image:hover {
-            transform: scale(1.02) rotateY(5deg);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+            transform: scale(1.03) rotateY(5deg) rotateX(2deg);
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6),
+                        0 0 80px rgba(102, 126, 234, 0.4);
         }
 
         .image-caption {
-            margin-top: 1.5rem;
-            color: #718096;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
             font-style: italic;
-            font-size: 1rem;
-            animation: fadeInUp 2s ease forwards;
+            font-size: 1.1rem;
+            animation: fadeInUp 3s ease forwards;
         }
 
-        /* Content Sections */
+        /* Content Sections with Staggered Animations */
         .content-section {
             margin: 4rem 0;
-            animation: sectionFadeIn 1s ease forwards;
+            animation: sectionFadeIn 1.2s ease forwards;
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(50px);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .content-section:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .content-section:nth-child(odd) {
+            animation-delay: 0.4s;
         }
 
         @keyframes sectionFadeIn {
@@ -430,12 +659,15 @@
         }
 
         .section-title {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 2rem;
-            color: #2d3748;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             position: relative;
-            padding-left: 1.5rem;
+            padding-left: 2rem;
         }
 
         .section-title::before {
@@ -444,74 +676,131 @@
             left: 0;
             top: 0;
             bottom: 0;
-            width: 6px;
+            width: 8px;
             background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 3px;
-            animation: barGlow 2s ease-in-out infinite;
+            border-radius: 4px;
+            animation: barGlow 3s ease-in-out infinite;
         }
 
         @keyframes barGlow {
-            0%, 100% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.3); }
-            50% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.6); }
+            0%, 100% { box-shadow: 0 0 10px rgba(102, 126, 234, 0.3), inset 0 0 10px rgba(102, 126, 234, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.6), inset 0 0 20px rgba(102, 126, 234, 0.4); }
         }
 
         .content-text {
             font-size: 1.2rem;
-            line-height: 1.9;
+            line-height: 2;
             margin-bottom: 2rem;
-            color: #4a5568;
+            color: rgba(255, 255, 255, 0.8);
         }
 
+        /* Enhanced Highlight Box */
         .highlight-box {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border-left: 6px solid #667eea;
-            padding: 2rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+            border-left: 8px solid #667eea;
+            padding: 2.5rem;
             margin: 3rem 0;
-            border-radius: 0 15px 15px 0;
+            border-radius: 0 20px 20px 0;
             position: relative;
-            animation: highlightPulse 3s ease infinite;
+            animation: highlightPulse 4s ease infinite;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
         @keyframes highlightPulse {
-            0%, 100% { box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1); }
-            50% { box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2); }
+            0%, 100% { 
+                box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 15px 60px rgba(102, 126, 234, 0.3);
+                transform: scale(1.01);
+            }
         }
 
         .highlight-box::before {
-            content: '💡';
+            content: '';
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 2rem;
+            top: 2rem;
+            right: 2rem;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
             animation: bounce 2s infinite;
         }
 
-        /* Stats Section */
+        .highlight-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.05), transparent);
+            animation: highlightSweep 3s ease infinite;
+        }
+
+        @keyframes highlightSweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) scale(1); }
+            40% { transform: translateY(-10px) scale(1.1); }
+            60% { transform: translateY(-5px) scale(1.05); }
+        }
+
+        /* Advanced Stats Section */
         .stats-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 3rem;
+            background: rgba(15, 15, 35, 0.6);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 4rem;
             margin: 4rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
+            animation: statsBgRotate 20s linear infinite;
+        }
+
+        @keyframes statsBgRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            margin: 2rem 0;
+            margin: 3rem 0;
+            position: relative;
+            z-index: 2;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(15, 15, 35, 0.8);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            backdrop-filter: blur(20px);
         }
 
         .stat-card::before {
@@ -521,45 +810,87 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
             background-size: 200% 200%;
-            animation: gradientShift 2s ease infinite;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transform: translateY(-15px) scale(1.03) rotateY(5deg);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5),
+                        0 0 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card:hover::after {
+            width: 200px;
+            height: 200px;
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 900;
-            color: #667eea;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: block;
-            margin-bottom: 0.5rem;
-            animation: numberCount 2s ease forwards;
+            margin-bottom: 1rem;
+            animation: numberCount 3s ease forwards, numberGlow 2s ease infinite;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3)); }
+            50% { filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.6)); }
         }
 
         .stat-label {
-            color: #718096;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1rem;
             font-weight: 600;
         }
 
-        /* Key Points */
+        /* Enhanced Key Points */
         .key-points {
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem;
+            background: rgba(15, 15, 35, 0.6);
+            border-radius: 25px;
+            padding: 3rem;
             margin: 3rem 0;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .key-points::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            background-size: 200% 200%;
+            animation: gradientSlide 2s ease infinite;
         }
 
         .key-points h3 {
-            color: #2d3748;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
         }
 
@@ -570,82 +901,123 @@
 
         .key-points li {
             position: relative;
-            padding: 1rem 0 1rem 3rem;
-            color: #4a5568;
+            padding: 1.2rem 0 1.2rem 3rem;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 1.1rem;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
         }
 
         .key-points li:hover {
-            color: #2d3748;
-            transform: translateX(5px);
+            color: rgba(255, 255, 255, 1);
+            transform: translateX(10px);
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 10px;
         }
 
         .key-points li::before {
-            content: '✨';
+            content: '';
             position: absolute;
             left: 0;
-            font-size: 1.2rem;
-            animation: sparkle 2s infinite;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            animation: sparkle 3s infinite;
         }
 
         @keyframes sparkle {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(180deg); }
+            0%, 100% { transform: translateY(-50%) scale(1) rotate(0deg); }
+            50% { transform: translateY(-50%) scale(1.2) rotate(180deg); }
         }
 
-        /* Quote Section */
+        /* Enhanced Quote Section */
         .quote-section {
             text-align: center;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
             color: white;
             padding: 4rem;
             margin: 4rem 0;
-            border-radius: 25px;
+            border-radius: 30px;
             position: relative;
             overflow: hidden;
-            animation: quotePulse 4s ease-in-out infinite;
+            animation: quotePulse 5s ease-in-out infinite;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
         }
 
         @keyframes quotePulse {
-            0%, 100% { box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3); }
-            50% { box-shadow: 0 30px 80px rgba(102, 126, 234, 0.5); }
+            0%, 100% { 
+                box-shadow: 0 25px 80px rgba(102, 126, 234, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 35px 100px rgba(102, 126, 234, 0.5);
+                transform: scale(1.02);
+            }
         }
 
         .quote-section::before {
-            content: '"';
-            font-size: 8rem;
+            content: '';
             position: absolute;
-            top: -2rem;
+            top: 2rem;
             left: 2rem;
-            opacity: 0.2;
-            font-weight: bold;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: quoteFloat 4s ease-in-out infinite;
+        }
+
+        .quote-section::after {
+            content: '';
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: quoteFloat 4s ease-in-out infinite reverse;
+        }
+
+        @keyframes quoteFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.1); }
         }
 
         .quote-text {
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: 400;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             font-style: italic;
+            position: relative;
+            z-index: 2;
         }
 
         .quote-author {
             font-weight: 700;
             opacity: 0.9;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
         }
 
-        /* CTA Section */
+        /* Enhanced CTA Section */
         .cta-section {
             text-align: center;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(15, 15, 35, 0.8);
             padding: 4rem;
-            border-radius: 25px;
+            border-radius: 30px;
             margin-top: 4rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
         .cta-section::before {
@@ -654,30 +1026,26 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-            background-size: 300% 300%;
-            animation: gradientSlide 2s ease infinite;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #4facfe);
+            background-size: 400% 400%;
+            animation: gradientSlide 3s ease infinite;
         }
 
         .cta-button {
             display: inline-block;
-            padding: 1.5rem 3rem;
+            padding: 1.8rem 4rem;
             background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
             position: relative;
             overflow: hidden;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
         }
 
         .cta-button::before {
@@ -688,75 +1056,152 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s;
+            transition: left 0.8s ease;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
         }
 
         .cta-button:hover::before {
             left: 100%;
         }
 
-        /* Footer */
+        .cta-button:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Enhanced Footer */
         footer {
             text-align: center;
-            padding: 3rem;
-            color: rgba(255, 255, 255, 0.8);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem;
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
             margin-top: 4rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 35, 0.5);
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            animation: footerGlow 3s ease infinite;
+        }
+
+        @keyframes footerGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .logo { font-size: 2.5rem; }
-            .hero-title { font-size: 2.5rem; }
-            .article-title { font-size: 2rem; }
+            .logo-text { font-size: 3rem; }
+            .hero-title { font-size: 3rem; }
+            .article-title { font-size: 2.2rem; }
             .container { padding: 2rem 1rem; }
             .main-article { padding: 2rem; }
             .article-meta { flex-direction: column; gap: 1rem; }
-            .nav-link { padding: 0.8rem 1.5rem; }
-            .section-title { font-size: 1.8rem; }
+            .nav-link { padding: 1rem 1.5rem; }
+            .section-title { font-size: 2rem; padding-left: 1.5rem; }
             .stats-grid { grid-template-columns: 1fr; }
-            .seismic-logo-img { width: 60px; height: 60px; }
+            .seismic-logo-img { width: 80px; height: 80px; }
+            .stat-number { font-size: 2.5rem; }
+            .quote-text { font-size: 1.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .cta-button { padding: 1.5rem 3rem; font-size: 1rem; }
         }
 
         /* Scroll animations */
         .scroll-animate {
             opacity: 0;
             transform: translateY(50px);
-            transition: all 0.8s ease;
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .scroll-animate.visible {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Mouse trail effect */
+        .mouse-trail {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            animation: trailFade 1s ease-out forwards;
+        }
+
+        @keyframes trailFade {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
     </style>
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
     <!-- Loading Screen -->
     <div class="loader">
-        <div class="loader-logo">🏢</div>
+        <div class="loader-container">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
         <div class="loader-text">SeismicSys</div>
-        <div class="loader-subtitle">Loading encrypted blockchain...</div>
+        <div class="loader-progress">
+            <div class="progress-bar"></div>
+        </div>
     </div>
 
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="floating-shapes"></div>
-        <div class="floating-shapes"></div>
-        <div class="floating-shapes"></div>
-        <div class="floating-shapes"></div>
-        <div class="floating-shapes"></div>
+    <!-- Dynamic Background -->
+    <div class="background-container">
+        <div class="floating-particles">
+            <div class="particle" style="left: 10%; animation-delay: 0s; width: 4px; height: 4px;"></div>
+            <div class="particle" style="left: 20%; animation-delay: 2s; width: 6px; height: 6px;"></div>
+            <div class="particle" style="left: 30%; animation-delay: 4s; width: 3px; height: 3px;"></div>
+            <div class="particle" style="left: 40%; animation-delay: 6s; width: 5px; height: 5px;"></div>
+            <div class="particle" style="left: 50%; animation-delay: 8s; width: 4px; height: 4px;"></div>
+            <div class="particle" style="left: 60%; animation-delay: 10s; width: 7px; height: 7px;"></div>
+            <div class="particle" style="left: 70%; animation-delay: 12s; width: 3px; height: 3px;"></div>
+            <div class="particle" style="left: 80%; animation-delay: 14s; width: 5px; height: 5px;"></div>
+            <div class="particle" style="left: 90%; animation-delay: 16s; width: 4px; height: 4px;"></div>
+        </div>
     </div>
 
     <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="seismic-logo.png" alt="SeismicSys Logo" class="seismic-logo-img">
-            <div class="logo">SeismicSys</div>
+            <div class="logo-glow"></div>
+            <img src="seismic.png" alt="SeismicSys Logo" class="seismic-logo-img">
+            <div class="logo-text">SeismicSys</div>
         </div>
-        <div class="tagline">Building Privacy-First Blockchain Infrastructure for Institutions</div>
+        <div class="tagline">Encrypted Blockchain Infrastructure for Institutional Adoption</div>
         <nav>
             <a href="#home" class="nav-link">Home</a>
             <a href="#technology" class="nav-link">Technology</a>
@@ -769,8 +1214,9 @@
     <div class="container">
         <!-- Hero Section -->
         <section class="hero-section">
-            <h1 class="hero-title">The Future of Institutional Blockchain</h1>
-            <p class="hero-subtitle">Encrypted by design. Compliant by choice. Built for the institutions that demand both privacy and transparency.</p>
+            <div class="hero-background"></div>
+            <h1 class="hero-title">Privacy-First Blockchain Revolution</h1>
+            <p class="hero-subtitle">Base-layer encryption that gives institutions the confidentiality they demand while maintaining regulatory transparency</p>
         </section>
 
         <!-- Main Article -->
@@ -779,105 +1225,110 @@
                 <h1 class="article-title">Why Institutions Need Encrypted Blockchain</h1>
                 <div class="article-meta">
                     <span class="article-category">Blockchain Privacy</span>
-                    <span>15 min read</span>
-                    <span>Featured Article</span>
-                    <span>By SeismicSys Team</span>
+                    <span>Research Paper</span>
+                    <span>SeismicSys Team</span>
+                    <span>2025</span>
                 </div>
             </div>
 
             <!-- Blockchain Diagram -->
             <div class="image-container">
+                <div class="image-glow"></div>
                 <img src="seismic new chart.png" alt="Why Institutions Need Encrypted Blockchain" class="diagram-image">
                 <p class="image-caption">The complete pathway from Web2 privacy standards to institutional blockchain adoption</p>
             </div>
 
             <!-- Content Sections -->
             <div class="content-section scroll-animate">
-                <h2 class="section-title">The Web2 vs Web3 Privacy Paradox</h2>
+                <h2 class="section-title">The Web2 Privacy Standard</h2>
                 <p class="content-text">
-                    Web2 brought us platforms, cloud computing, and global connectivity, but one principle was absolutely non-negotiable: <strong>privacy</strong>. Banking runs on SWIFT's encrypted networks, healthcare operates under HIPAA's strict guidelines, and payments flow through encrypted rails that protect every transaction.
+                    Web2 infrastructure was built on a foundation of privacy and encryption. Banking systems run on SWIFT's encrypted networks, healthcare operates under HIPAA's strict guidelines, and payment processors use military-grade encryption to protect every transaction.
                 </p>
                 <p class="content-text">
-                    If encryption was essential for Web2's success, why would any institution adopt a blockchain where every transaction, strategy, and client interaction is public by default?
+                    These aren't optional features—they're fundamental requirements that enable trillion-dollar industries to function. Yet current blockchain technology completely abandons this proven privacy model.
                 </p>
                 
                 <div class="highlight-box">
-                    <strong>The Reality Check:</strong> Institutional privacy norms already exist and work. Dark pools let hedge funds execute massive trades without market manipulation, bond reports are strategically delayed to protect trading strategies, and healthcare platforms like Elsevier & Medscape build HIPAA/GDPR compliance into their core architecture—not as an afterthought.
+                    <strong>Critical Reality:</strong> Dark pools allow hedge funds to execute massive trades without market manipulation. Bond trade reports are delayed strategically to protect institutional strategies. Healthcare platforms build HIPAA compliance into their core architecture, not as an afterthought.
                 </div>
             </div>
 
             <div class="content-section scroll-animate">
-                <h2 class="section-title">Current Blockchain: A Public Nightmare for Institutions</h2>
+                <h2 class="section-title">Public Blockchain: The Institutional Nightmare</h2>
                 <p class="content-text">
-                    On today's public blockchains, every trade, every strategy, and every piece of client data is exposed to everyone—competitors, regulators, and the general public. This level of transparency isn't just uncomfortable for institutions; it's completely unacceptable.
+                    Every transaction on current blockchains is a public broadcast. Trading strategies, client relationships, competitive advantages, and proprietary data—all exposed to competitors, regulators, and the general public simultaneously.
                 </p>
 
                 <div class="key-points">
-                    <h3>Why "Bolt-On" Privacy Solutions Fail:</h3>
+                    <h3>Why Current Privacy Solutions Fail Institutions:</h3>
                     <ul>
-                        <li>Privacy mixers like Tornado Cash get banned and labeled as suspicious</li>
+                        <li>Privacy mixers like Tornado Cash face regulatory bans and compliance issues</li>
+                        <li>Bolt-on privacy creates security vulnerabilities and trust gaps</li>
                         <li>Regulatory bodies view privacy tools as evasion mechanisms</li>
-                        <li>Compliance teams reject solutions that can't guarantee regulatory alignment</li>
-                        <li>Base layer transparency fundamentally conflicts with business confidentiality needs</li>
-                        <li>Retroactive privacy patches create security vulnerabilities and trust issues</li>
+                        <li>Compliance teams cannot guarantee regulatory alignment</li>
+                        <li>Base layer transparency conflicts with business confidentiality</li>
+                        <li>Retroactive privacy patches compromise system integrity</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Stats Section -->
             <div class="stats-section scroll-animate">
-                <h2 class="section-title" style="text-align: center; color: white; padding-left: 0;">The Trillion-Dollar Opportunity</h2>
+                <h2 class="section-title" style="text-align: center; color: white; padding-left: 0;">The Trillion-Dollar Waiting Market</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
                         <span class="stat-number" data-target="9.79">0</span>
-                        <span class="stat-label">Healthcare EdTech Market 2024 ($B)</span>
+                        <span class="stat-label">Healthcare EdTech 2024 ($B)</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-number" data-target="17.03">0</span>
-                        <span class="stat-label">Projected by 2033 ($B)</span>
+                        <span class="stat-label">Projected 2033 ($B)</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" data-target="6.6">0</span>
+                        <span class="stat-label">Daily FX Volume ($T)</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-number">∞</span>
                         <span class="stat-label">Institutional Finance Market</span>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-number" data-target="6.6">0</span>
-                        <span class="stat-label">Trillion Daily FX Volume</span>
-                    </div>
                 </div>
 
-                <p class="content-text" style="color: rgba(255, 255, 255, 0.9); text-align: center; margin-top: 2rem;">
-                    Healthcare education alone is exploding from $9.79B to $17.03B by 2033, driven entirely by secure, compliant digital infrastructure. But institutional finance dwarfs this—with trillions flowing daily through equities, foreign exchange, and bond markets.
+                <p class="content-text" style="color: rgba(255, 255, 255, 0.9); text-align: center; margin-top: 3rem; font-size: 1.3rem;">
+                    Healthcare education alone grows from $9.79B to $17.03B by 2033, driven entirely by secure, compliant infrastructure. Institutional finance dwarfs this—with trillions flowing daily through protected, encrypted systems.
                 </p>
             </div>
 
             <div class="content-section scroll-animate">
-                <h2 class="section-title">The Barrier Isn't Technical—It's Privacy</h2>
+                <h2 class="section-title">The Real Barrier: Confidentiality, Not Performance</h2>
                 <p class="content-text">
-                    Blockchain technology has solved speed, cost, and scalability. The remaining barrier to institutional adoption isn't technical performance—it's <strong>confidentiality</strong>. Every major financial institution, healthcare system, and enterprise already has robust privacy requirements that public blockchains simply cannot meet.
+                    Blockchain has solved speed, cost, and scalability challenges. Layer 2 solutions process thousands of transactions per second. Gas fees have dropped dramatically. The technology works.
+                </p>
+                <p class="content-text">
+                    The remaining barrier isn't technical—it's privacy. Institutions require the same confidentiality standards that made Web2 adoption possible across banking, healthcare, and enterprise systems.
                 </p>
                 
                 <div class="highlight-box">
-                    <strong>Critical Insight:</strong> The barrier to blockchain adoption isn't speed, cost, or scalability anymore—it's confidentiality. Institutions need to protect trading strategies, client data, and competitive advantages while still maintaining regulatory compliance.
+                    <strong>The Breakthrough Insight:</strong> Institutions don't reject blockchain because it's inefficient. They reject it because it's too transparent. Fix privacy at the base layer, and adoption follows the same path as cloud computing and digital payments.
                 </div>
             </div>
 
             <div class="content-section scroll-animate">
-                <h2 class="section-title">Regulatory Alignment Through Base-Layer Encryption</h2>
+                <h2 class="section-title">Regulatory Alignment Through Controlled Transparency</h2>
                 <p class="content-text">
-                    Here's what most people misunderstand: encryption doesn't mean hiding from regulators—it means <strong>controlled transparency</strong>. Banks and healthcare systems already share data with regulatory bodies while keeping it private from competitors and unauthorized parties.
+                    Encryption doesn't mean hiding from regulators—it means controlled, permissioned transparency. Banks already share transaction data with regulatory bodies while keeping it private from competitors. Healthcare systems provide audit trails to compliance officers while protecting patient privacy.
                 </p>
 
                 <div class="key-points">
-                    <h3>The SeismicSys Regulatory Model:</h3>
+                    <h3>SeismicSys Regulatory Framework:</h3>
                     <ul>
-                        <li>Selective disclosure to authorized parties (regulators, auditors)</li>
-                        <li>Encrypted settlement with full audit trails for compliance</li>
-                        <li>Smart contracts that execute without leaking proprietary strategies</li>
+                        <li>Selective disclosure to authorized regulatory parties</li>
+                        <li>Encrypted settlement with complete audit trails</li>
+                        <li>Smart contracts that execute without revealing strategies</li>
+                        <li>Zero-knowledge proofs for verification without exposure</li>
+                        <li>Compliance built into protocol architecture</li>
                         <li>Privacy by design, transparency by permission</li>
-                        <li>Regulatory compliance built into the protocol layer</li>
-                        <li>Zero-knowledge proofs for verification without data exposure</li>
                     </ul>
                 </div>
             </div>
@@ -885,123 +1336,159 @@
             <!-- Quote Section -->
             <div class="quote-section scroll-animate">
                 <p class="quote-text">
-                    Institutions don't reject blockchain because it's inefficient—they reject it because it's too transparent.
+                    The barrier to institutional blockchain adoption isn't technical performance—it's confidentiality. SeismicSys solves this with base-layer encryption.
                 </p>
-                <p class="quote-author">— The Core Problem SeismicSys Solves</p>
+                <p class="quote-author">SeismicSys Protocol Vision</p>
             </div>
 
             <div class="content-section scroll-animate">
-                <h2 class="section-title">SeismicSys: Privacy-First Blockchain Architecture</h2>
+                <h2 class="section-title">SeismicSys: Privacy-Native Architecture</h2>
                 <p class="content-text">
-                    SeismicSys isn't just another blockchain—it's a complete rethinking of how institutional-grade privacy should work. We're building base-layer encryption that gives institutions the confidentiality they require while maintaining the transparency regulators need.
+                    SeismicSys isn't another blockchain with privacy features bolted on. It's a complete architectural reimagining that puts institutional-grade confidentiality at the foundation while maintaining regulatory compliance and system integrity.
                 </p>
 
                 <div class="key-points">
-                    <h3>How SeismicSys Changes Everything:</h3>
+                    <h3>Revolutionary Architecture Benefits:</h3>
                     <ul>
-                        <li>Base-layer encryption means privacy isn't an add-on—it's built in</li>
-                        <li>Institutional strategies remain hidden from competitors</li>
-                        <li>Client data stays protected under existing privacy frameworks</li>
-                        <li>Regulatory compliance through controlled, permissioned transparency</li>
-                        <li>Smart contracts execute without revealing business logic</li>
-                        <li>Audit trails exist without compromising trade secrets</li>
+                        <li>Base-layer encryption eliminates privacy as an add-on concern</li>
+                        <li>Institutional trading strategies remain completely confidential</li>
+                        <li>Client data protection under existing regulatory frameworks</li>
+                        <li>Selective transparency for authorized compliance monitoring</li>
+                        <li>Smart contract execution without business logic exposure</li>
+                        <li>Complete audit trails without compromising trade secrets</li>
                     </ul>
                 </div>
-
-                <div class="highlight-box">
-                    <strong>The SeismicSys Promise:</strong> Fix privacy at the base layer, and blockchain follows the exact same adoption path as healthcare systems, cloud computing, and payment networks: compliance + privacy = mass institutional adoption.
-                </div>
             </div>
 
             <div class="content-section scroll-animate">
-                <h2 class="section-title">Real-World Applications</h2>
-                <p class="content-text">
-                    SeismicSys enables use cases that are impossible on public blockchains but essential for institutional adoption:
-                </p>
-
+                <h2 class="section-title">Real-World Implementation</h2>
+                
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3 style="color: #667eea; margin-bottom: 1rem;">🏦 Banking</h3>
-                        <p style="font-size: 0.9rem; color: #4a5568;">Cross-border payments with SWIFT-level privacy and blockchain efficiency</p>
+                        <h3 style="color: #667eea; margin-bottom: 1rem; font-size: 1.3rem;">Banking Infrastructure</h3>
+                        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.8);">Cross-border payments with SWIFT-level privacy and blockchain efficiency</p>
                     </div>
                     <div class="stat-card">
-                        <h3 style="color: #667eea; margin-bottom: 1rem;">🏥 Healthcare</h3>
-                        <p style="font-size: 0.9rem; color: #4a5568;">Patient data sharing with HIPAA compliance and global accessibility</p>
+                        <h3 style="color: #667eea; margin-bottom: 1rem; font-size: 1.3rem;">Healthcare Systems</h3>
+                        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.8);">Patient data sharing with HIPAA compliance and global interoperability</p>
                     </div>
                     <div class="stat-card">
-                        <h3 style="color: #667eea; margin-bottom: 1rem;">📈 Trading</h3>
-                        <p style="font-size: 0.9rem; color: #4a5568;">Dark pool functionality with blockchain settlement and verification</p>
+                        <h3 style="color: #667eea; margin-bottom: 1rem; font-size: 1.3rem;">Trading Platforms</h3>
+                        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.8);">Dark pool functionality with blockchain settlement and verification</p>
                     </div>
                     <div class="stat-card">
-                        <h3 style="color: #667eea; margin-bottom: 1rem;">🏢 Enterprise</h3>
-                        <p style="font-size: 0.9rem; color: #4a5568;">Supply chain transparency without revealing competitive strategies</p>
+                        <h3 style="color: #667eea; margin-bottom: 1rem; font-size: 1.3rem;">Enterprise Solutions</h3>
+                        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.8);">Supply chain transparency without competitive intelligence leaks</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="content-section scroll-animate">
-                <h2 class="section-title">The Market is Ready</h2>
-                <p class="content-text">
-                    Every major institution already operates with sophisticated privacy frameworks. They're not waiting for blockchain to become more efficient—they're waiting for blockchain to become more <strong>private</strong>.
-                </p>
-                <p class="content-text">
-                    Healthcare companies need HIPAA-compliant data sharing. Financial institutions require trading privacy and client confidentiality. Enterprises demand supply chain transparency without revealing competitive advantages.
-                </p>
-                <p class="content-text">
-                    <strong>SeismicSys delivers all of this by building privacy into the foundation, not bolting it on afterward.</strong>
-                </p>
             </div>
 
             <!-- CTA Section -->
             <div class="cta-section scroll-animate">
-                <h2 style="margin-bottom: 1rem;">Ready to Build the Future of Institutional Blockchain?</h2>
-                <p style="margin-bottom: 2rem; font-size: 1.1rem; color: #4a5568;">Join SeismicSys in creating the encrypted blockchain infrastructure that institutions actually want to use.</p>
-                <a href="#contact" class="cta-button">Explore SeismicSys Solutions</a>
+                <h2 style="margin-bottom: 1.5rem; color: white; font-size: 2.5rem;">Build the Future with SeismicSys</h2>
+                <p style="margin-bottom: 2rem; font-size: 1.2rem; color: rgba(255, 255, 255, 0.8);">
+                    Join the revolution in privacy-first blockchain infrastructure. Built for institutions that demand both confidentiality and compliance.
+                </p>
+                <a href="#contact" class="cta-button">Explore SeismicSys Technology</a>
             </div>
         </article>
-
-        <!-- Additional Sections -->
-        <section class="stats-section scroll-animate" style="margin-top: 4rem;">
-            <h2 class="section-title" style="text-align: center; color: white; padding-left: 0;">Why Now?</h2>
-            <div class="content-text" style="color: rgba(255, 255, 255, 0.9); text-align: center; font-size: 1.1rem;">
-                <p>The convergence of regulatory clarity, institutional demand, and technical maturity has created the perfect moment for privacy-first blockchain infrastructure. SeismicSys is positioned at the center of this trillion-dollar opportunity.</p>
-            </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-number">2025</span>
-                    <span class="stat-label">Regulatory Frameworks Maturing</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" data-target="87">0</span>
-                    <span class="stat-label">% of Institutions Want Privacy</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">1st</span>
-                    <span class="stat-label">Base-Layer Encrypted Blockchain</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">∞</span>
-                    <span class="stat-label">Market Opportunity</span>
-                </div>
-            </div>
-        </section>
     </div>
 
     <footer>
-        <p>&copy; 2025 SeismicSys. Building the encrypted blockchain infrastructure institutions need. Privacy by design, compliance by choice.</p>
-        <p style="margin-top: 1rem; opacity: 0.7;">🔒 Encrypted • 🏛️ Compliant • 🚀 Scalable</p>
+        <p style="font-size: 1.1rem; margin-bottom: 1rem;">&copy; 2025 SeismicSys. Revolutionary encrypted blockchain infrastructure.</p>
+        <p style="opacity: 0.7;">Privacy by Design | Compliance by Choice | Adoption by Default</p>
     </footer>
 
     <script>
-        // Remove loading screen
+        // Enhanced loading screen
         window.addEventListener('load', function() {
             setTimeout(() => {
                 document.querySelector('.loader').style.display = 'none';
-            }, 3000);
+                document.body.style.overflow = 'visible';
+            }, 4000);
         });
 
-        // Smooth scrolling for navigation
+        // Custom cursor
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Mouse trail effect
+        let mouseTrails = [];
+        document.addEventListener('mousemove', (e) => {
+            if (mouseTrails.length > 10) {
+                const oldTrail = mouseTrails.shift();
+                oldTrail.remove();
+            }
+
+            const trail = document.createElement('div');
+            trail.className = 'mouse-trail';
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            document.body.appendChild(trail);
+            mouseTrails.push(trail);
+
+            setTimeout(() => {
+                if (trail.parentNode) {
+                    trail.parentNode.removeChild(trail);
+                }
+            }, 1000);
+        });
+
+        // Enhanced scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced statistics animation
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number[data-target]');
+            
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                        entry.target.classList.add('animated');
+                        const target = parseFloat(entry.target.getAttribute('data-target'));
+                        animateNumber(entry.target, target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            stats.forEach(stat => statsObserver.observe(stat));
+        }
+
+        function animateNumber(element, target) {
+            let current = 0;
+            const increment = target / 120;
+            const duration = 3000;
+            const stepTime = duration / 120;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.round(current * 100) / 100;
+            }, stepTime);
+        }
+
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1015,123 +1502,178 @@
             });
         });
 
-        // Enhanced parallax effect
-        window.addEventListener('scroll', function() {
+        // Enhanced parallax effects
+        let ticking = false;
+        function updateParallax() {
             const scrolled = window.pageYOffset;
-            const shapes = document.querySelectorAll('.floating-shapes');
+            const particles = document.querySelectorAll('.particle');
             
-            shapes.forEach((shape, index) => {
-                const speed = 0.3 + (index * 0.1);
-                const rotation = scrolled * 0.05;
-                shape.style.transform = `translateY(${scrolled * speed}px) rotate(${rotation + (index * 45)}deg)`;
+            particles.forEach((particle, index) => {
+                const speed = 0.2 + (index * 0.1);
+                const rotation = scrolled * 0.02;
+                particle.style.transform = `translateY(${scrolled * speed}px) rotate(${rotation + (index * 45)}deg)`;
             });
-
-            // Animate sections on scroll
-            const sections = document.querySelectorAll('.scroll-animate');
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                const isVisible = rect.top < window.innerHeight * 0.8;
-                
-                if (isVisible) {
-                    section.classList.add('visible');
-                }
-            });
-        });
-
-        // Animate statistics
-        function animateStats() {
-            const stats = document.querySelectorAll('.stat-number[data-target]');
-            const options = {
-                threshold: 0.5
-            };
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-                        entry.target.classList.add('animated');
-                        const target = parseFloat(entry.target.getAttribute('data-target'));
-                        animateNumber(entry.target, target);
-                    }
-                });
-            }, options);
-
-            stats.forEach(stat => observer.observe(stat));
+            
+            ticking = false;
         }
 
-        function animateNumber(element, target) {
-            let current = 0;
-            const increment = target / 60;
-            const duration = 2000;
-            const stepTime = duration / 60;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                
-                if (target >= 1) {
-                    element.textContent = Math.floor(current * 100) / 100;
-                } else {
-                    element.textContent = Math.floor(current);
-                }
-            }, stepTime);
-        }
-
-        // Add hover effects to cards
-        document.querySelectorAll('.stat-card, .key-points').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // Enhanced image interaction
-        document.querySelector('.diagram-image').addEventListener('click', function() {
-            this.style.transform = 'scale(1.1) rotateY(10deg)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1) rotateY(0deg)';
-            }, 300);
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
         });
 
         // Initialize animations
         animateStats();
 
-        // Add dynamic content loading effect
-        const contentSections = document.querySelectorAll('.content-section');
-        contentSections.forEach((section, index) => {
-            section.style.animationDelay = `${index * 0.2}s`;
+        // Enhanced hover effects
+        document.querySelectorAll('.stat-card, .key-points').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.03) rotateY(5deg)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1) rotateY(0deg)';
+            });
         });
 
-        // Easter egg: Konami code for special effects
-        let konamiCode = [];
-        const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-        
-        document.addEventListener('keydown', function(e) {
-            konamiCode.push(e.keyCode);
-            if (konamiCode.length > konamiSequence.length) {
-                konamiCode.shift();
-            }
+        // Enhanced image interaction
+        const diagramImage = document.querySelector('.diagram-image');
+        if (diagramImage) {
+            diagramImage.addEventListener('click', function() {
+                this.style.transform = 'scale(1.1) rotateY(15deg) rotateX(5deg)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1) rotateY(0deg) rotateX(0deg)';
+                }, 500);
+            });
+        }
+
+        // Logo interaction
+        const logo = document.querySelector('.logo-text');
+        if (logo) {
+            logo.addEventListener('click', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'gradientShift 4s ease infinite, textPulse 2s ease infinite';
+                }, 100);
+            });
+        }
+
+        // Navigation link effects
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.textShadow = '0 0 10px rgba(102, 126, 234, 0.5)';
+            });
             
-            if (konamiCode.length === konamiSequence.length && 
-                konamiCode.every((code, index) => code === konamiSequence[index])) {
-                // Add special rainbow effect
-                document.body.style.filter = 'hue-rotate(0deg)';
-                let hue = 0;
-                const rainbow = setInterval(() => {
-                    hue += 5;
-                    document.body.style.filter = `hue-rotate(${hue}deg)`;
-                    if (hue >= 360) {
-                        clearInterval(rainbow);
-                        document.body.style.filter = 'none';
-                    }
-                }, 50);
+            link.addEventListener('mouseleave', function() {
+                this.style.textShadow = 'none';
+            });
+        });
+
+        // Dynamic particle generation
+        function createRandomParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.width = (Math.random() * 5 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            
+            const particleContainer = document.querySelector('.floating-particles');
+            particleContainer.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 20000);
+        }
+
+        // Generate particles periodically
+        setInterval(createRandomParticle, 2000);
+
+        // Enhanced CTA button effect
+        const ctaButton = document.querySelector('.cta-button');
+        if (ctaButton) {
+            ctaButton.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 20px 60px rgba(102, 126, 234, 0.6), 0 0 30px rgba(102, 126, 234, 0.4)';
+            });
+            
+            ctaButton.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 10px 40px rgba(102, 126, 234, 0.3)';
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Reset all animations
+                document.querySelectorAll('*').forEach(el => {
+                    el.style.animation = el.style.animation;
+                });
             }
         });
+
+        // Performance optimization
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // Recalculate positions and sizes
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(particle => {
+                    particle.style.left = Math.random() * 100 + '%';
+                });
+            }, 250);
+        });
+
+        // Intersection observer for performance
+        const performanceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                } else {
+                    entry.target.style.animationPlayState = 'paused';
+                }
+            });
+        });
+
+        // Apply performance optimization to animated elements
+        document.querySelectorAll('[class*="animation"], [class*="animate"]').forEach(el => {
+            performanceObserver.observe(el);
+        });
+
+        // Final touch: Add subtle screen shake on logo click
+        let shakeCount = 0;
+        if (logo) {
+            logo.addEventListener('click', function() {
+                if (shakeCount < 3) {
+                    document.body.style.animation = 'none';
+                    setTimeout(() => {
+                        document.body.style.animation = 'subtle-shake 0.5s ease-out';
+                        shakeCount++;
+                        setTimeout(() => {
+                            document.body.style.animation = 'none';
+                            if (shakeCount >= 3) shakeCount = 0;
+                        }, 500);
+                    }, 50);
+                }
+            });
+        }
+
+        // Add subtle shake animation
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent = `
+            @keyframes subtle-shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-1px); }
+                20%, 40%, 60%, 80% { transform: translateX(1px); }
+            }
+        `;
+        document.head.appendChild(shakeStyle);
+
+        // Initialize everything
+        console.log('SeismicSys Ultra-Animated Website Loaded Successfully');
     </script>
 </body>
 </html>
